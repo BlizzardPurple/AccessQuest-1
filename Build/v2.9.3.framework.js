@@ -12,6 +12,7 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 const usersRef = db.collection("serious-games");
 var newDocRef = usersRef.doc();
+
 function fbAdd(str) {
 const parts = str.split(":");
 if (parts[0].trim() == "FirebaseReload") {
