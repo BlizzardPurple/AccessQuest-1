@@ -8,26 +8,29 @@ const firebaseConfig = {
   appId: "1:745040308123:web:632213c7695ccea639e33e",
   measurementId: "G-TYDRMZZPK1"
 };
-  firebase.initializeApp(firebaseConfig);
-  var db = firebase.firestore();
-  const usersRef = db.collection("serious-games");
-  const newDocRef = usersRef.doc();
-  function fbAdd(str) {
-  const parts = str.split(":");
-  if (parts[0] == "Firebase") {
-  newDocRef.set({
-  [parts[1]]: parts[2]
-  }, {
-  merge: true
-  })
-  .then(() => {
-  console.log("Document written with ID: ", newDocRef.id);
-  })
-  .catch((error) => {
-  console.error("Error adding document: ", error);
-  });
-  }
-  }
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+const usersRef = db.collection("serious-games");
+var newDocRef = usersRef.doc();
+function fbAdd(str) {
+const parts = str.split(":");
+if (parts[0].trim() == "FirebaseReload") {
+newDocRef = usersRef.doc();
+console.log("Document ID Reset, new ID: ", newDocRef.id);
+}
+if (parts[0].trim() == "Firebase") {
+newDocRef.set({
+[parts[1]]: parts[2]
+}, {
+merge: true
+}).then(() => {
+console.log("Document written with ID: ", newDocRef.id);
+}).catch((error) => {
+console.error("Error adding document: ", error);
+});
+}
+}
+
 var unityFramework = (() => {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
   if (typeof __filename !== 'undefined') _scriptDir = _scriptDir || __filename;
